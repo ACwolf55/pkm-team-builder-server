@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 
 
 import java.util.List;
@@ -44,10 +45,13 @@ public List<Message> getAllMessages() {
 }
 
    // GET request on the endpoint GET localhost:8080/messages/{message_id}
-    public Message getMessageById(Long messageId) {
-        return messageRepository.findById(messageId)
-                .orElseThrow(() -> new IllegalArgumentException("The message you seek remains obscured from view."));
-    }
+//    As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages/{message_id}.
+// - The response body should contain a JSON representation of the message identified by the message_id. It is expected for the response body to simply be empty if there is no such message. The response status should always be 200, which is the default.
+public Optional<Message> getMessageById(int messageId) {
+    long longId = messageId; 
+    return messageRepository.findById(longId);
+}
+
 
     // ` DELETE request on the endpoint DELETE localhost:8080/messages/{message_id}
 //     As a User, I should be able to submit a DELETE request on the endpoint DELETE localhost:8080/messages/{message_id}.

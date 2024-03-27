@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.HttpStatus;
+import java.util.Optional;
+
 
 import java.util.List;
-
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your
@@ -88,28 +89,42 @@ public class SocialMediaController {
         Message newMessage = messageService.postMessage(requestBody);
         return ResponseEntity.ok(newMessage);
     }
-    
 
     // GET request on the endpoint GET localhost:8080/messages
+    // As a user, I should be able to submit a GET request on the endpoint GET
+    // localhost:8080/messages.
+    // - The response body should contain a JSON representation of a list containing
+    // all messages retrieved from the database. It is expected for the list to
+    // simply be empty if there are no messages. The response status should always
+    // be 200, which is the default.
     @GetMapping("/messages")
-    public ResponseEntity<List<Message>> postMessagesHandler() {
+    public ResponseEntity<List<Message>> getAllMessagesHandler() {
         List<Message> messages = messageService.getAllMessages();
         return ResponseEntity.ok(messages);
     }
-    
 
     // GET request on the endpoint GET localhost:8080/messages/{message_id}
+    // As a user, I should be able to submit a GET request on the endpoint GET
+    // localhost:8080/messages/{message_id}.
+    // - The response body should contain a JSON representation of the message
+    // identified by the message_id. It is expected for the response body to simply
+    // be empty if there is no such message. The response status should always be
+    // 200, which is the default.
     @GetMapping("/messages/{message_id}")
-    public ResponseEntity<String> getSingleMessageHandler(@PathVariable("message_id") String messageId) {
-        // Implement get single message logic
-        return ResponseEntity.ok("Message with id " + messageId);
+    public ResponseEntity<Message> getSingleMessageHandler(@PathVariable("message_id") int messageId) {
+        Optional<Message> optionalMessage = messageService.getMessageById(messageId);
+        if (optionalMessage.isPresent()) {
+            return ResponseEntity.ok(optionalMessage.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+    
 
     // ` DELETE request on the endpoint DELETE localhost:8080/messages/{message_id}
-    @GetMapping("/accounts/{account_id}/messages")
-    public ResponseEntity<String> getAccountMessagesHandler(@PathVariable("account_id") String accountId) {
-        // Implement get account messages logic
-        return ResponseEntity.ok("Messages for account with id " + accountId);
+    @DeleteMapping("/accounts/{account_id}/messages")
+    public ResponseEntity<String> deleteAccountMessagesHandler(@PathVariable("account_id") String accountId) {
+        return ResponseEntity.ok("Messages for account with id " + accountId + " deleted successfully");
     }
 
 }
