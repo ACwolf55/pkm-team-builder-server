@@ -160,5 +160,11 @@ public ResponseEntity<Integer> updateMessage(@RequestBody Message requestBody, @
 //         return ResponseEntity.ok(messages);
 //     }dy should contain a JSON representation of a list containing all messages posted by a particular user, which is retrieved from the database. It is expected for the list to simply be empty if there are no messages. The response status should always be 200, which is the default.
 // 
+// GET localhost:8080/accounts/{account_id}/messages
+@GetMapping("/accounts/{account_id}/messages")
+public ResponseEntity<List<Message>> getAllUserMessagesHandler(@PathVariable("account_id") int account_id) {
+    List<Message> messages = messageService.getAllUserMessages(account_id);
+    return ResponseEntity.ok(messages);
+        }
 
 }

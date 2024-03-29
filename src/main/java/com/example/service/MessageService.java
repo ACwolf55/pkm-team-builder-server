@@ -14,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.PatchMapping;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @Transactional
@@ -32,15 +33,14 @@ public class MessageService {
     public Message postMessage(Message message) {
         int account_id = message.getPosted_by();
         boolean userExists = accountRepository.existsById(account_id);
-        if (message.getMessage_text() == null || 
-            message.getMessage_text().trim().isEmpty() || 
-            message.getMessage_text().length() > 225 ||
-            !userExists) {
+        if (message.getMessage_text() == null ||
+                message.getMessage_text().trim().isEmpty() ||
+                message.getMessage_text().length() > 225 ||
+                !userExists) {
             throw new IllegalArgumentException("Invalid message or user");
         }
         return messageRepository.save(message);
     }
-    
 
     // GET request on the endpoint GET localhost:8080/messages
     // As a user, I should be able to submit a GET request on the endpoint GET
@@ -96,31 +96,61 @@ public class MessageService {
     public int deleteMessage(int message_id) {
         // long longId = message_id;
         boolean exists = messageRepository.existsById(message_id);
-        if(exists){
-           messageRepository.deleteById(message_id);
-           return 1;
-        }else{
+        if (exists) {
+            messageRepository.deleteById(message_id);
+            return 1;
+        } else {
             return 0;
         }
 
     }
 
-    //     ## 7: Our API should be able to update a message text identified by a message ID.
-// As a user, I should be able to submit a PATCH request on the endpoint PATCH localhost:8080/messages/{message_id}. The request body should contain a new message_text values to replace the message identified by message_id. The request body can not be guaranteed to contain any other information.
-// - The update of a message should be successful if and only if the message id already exists and the new message_text is not blank and is not over 255 characters. If the update is successful, the response body should contain the number of rows updated (1), and the response status should be 200, which is the default. The message existing on the database should have the updated message_text.
-// - If the update of the message is not successful for any reason, the response status should be 400. (Client error)
-// PATCH localhost:8080/messages/{message_id}
-public int patchMessage(Message message, int messageId) {
-    Optional<Message> optionalExistingMessage = messageRepository.findById(messageId);
-    if (optionalExistingMessage.isPresent()) {
-        Message existingMessage = optionalExistingMessage.get();
-        if (message.getMessage_text() != null && !message.getMessage_text().trim().isEmpty()) {
-            existingMessage.setMessage_text(message.getMessage_text());
+    // ## 7: Our API should be able to update a message text identified by a message
+    // ID.
+    // As a user, I should be able to submit a PATCH request on the endpoint PATCH
+    // localhost:8080/messages/{message_id}. The request body should contain a new
+    // message_text values to replace the message identified by message_id. The
+    // request body can not be guaranteed to contain any other information.
+    // - The update of a message should be successful if and only if the message id
+    // already exists and the new message_text is not blank and is not over 255
+    // characters. If the update is successful, the response body should contain the
+    // number of rows updated (1), and the response status should be 200, which is
+    // the default. The message existing on the database should have the updated
+    // message_text.
+    // - If the update of the message is not successful for any reason, the response
+    // status should be 400. (Client error)
+    // PATCH localhost:8080/messages/{message_id}
+    public int patchMessage(Message message, int messageId) {
+        Optional<Message> optionalExistingMessage = messageRepository.findById(messageId);
+        if (optionalExistingMessage.isPresent()) {
+            Message existingMessage = optionalExistingMessage.get();
+            if (message.getMessage_text() != null && !message.getMessage_text().trim().isEmpty()) {
+                existingMessage.setMessage_text(message.getMessage_text());
+            }
+            Message updatedMessage = messageRepository.save(existingMessage);
+            return updatedMessage.equals(existingMessage) ? 0 : 1;
         }
-        Message updatedMessage = messageRepository.save(existingMessage);
-        return updatedMessage.equals(existingMessage) ? 0 : 1;
+        return 0;
     }
-    return 0;
-}
+
+    // ## 8: Our API should be able to retrieve all messages written by a particular
+    // user.
+    // As a user, I should be able to submit a GET request on the endpoint GET
+    // localhost:8080/accounts/{account_id}/messages.
+    // - The response body should contain a JSON representation of a list containing
+    // all messages posted by a particular user, which is retrieved from the
+    // database. It is expected for the list to simply be empty if there are no
+    // messages. The response status should always be 200, which is the default.
+    public List<Message> getAllUserMessages(int account_id) {
+        List<Message> userMessages = new ArrayList<>();
+        List<Message> messages = getAllMessages();
+        for (Message message : messages) {
+            if (message.getPosted_by() == account_id) {
+                userMessages.add(message);
+            }
+        }
+
+        return userMessages;
+    }
 
 }

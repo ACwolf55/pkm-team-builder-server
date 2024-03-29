@@ -25,9 +25,9 @@ public class AccountService {
     }
 
     public Account register(Account account) {
-        // String username = account.getUsername();
+        String username = account.getUsername();
         
-        // boolean userExists = accountRepository.existsByUsername(username);
+        boolean userExists = accountRepository.existsByUsername(username);
         // if (userExists) {
         //     return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         // }
@@ -59,7 +59,5 @@ public class AccountService {
     }
     
 
-    // public List<Album> getAllAlbums(){
-    //     return albumRepository.findAll();
-    // }
+   
 }
