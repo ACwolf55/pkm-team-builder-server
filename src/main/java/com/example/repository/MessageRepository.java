@@ -16,6 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * JPARepository that will be used to preform persistence operations on Message objects
  */
 public interface MessageRepository extends JpaRepository <Message, Integer> {
-    // @Query(value = "SELECT * FROM message WHERE posted_by = :postedBy", nativeQuery = true)
-    // List<Message> findByPostedBy(@Param("posted_by") int posted_by);
+    @Query(value = "SELECT * FROM message WHERE posted_by = :posted_by", nativeQuery = true)
+    List<Message> findByPostedBy(@Param("posted_by") int posted_by);
 }

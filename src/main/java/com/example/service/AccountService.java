@@ -28,9 +28,9 @@ public class AccountService {
         String username = account.getUsername();
         
         boolean userExists = accountRepository.existsByUsername(username);
-        // if (userExists) {
-        //     return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
-        // }
+        if (userExists) {
+            return null;
+        }
     
         if (account.getUsername() == null || account.getUsername().isEmpty()) {
             throw new IllegalArgumentException("Username cannot be blank");

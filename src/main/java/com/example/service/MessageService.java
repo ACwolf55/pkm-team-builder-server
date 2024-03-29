@@ -123,12 +123,10 @@ public class MessageService {
     public int patchMessage(Message message, int messageId) {
         Optional<Message> optionalExistingMessage = messageRepository.findById(messageId);
         if (optionalExistingMessage.isPresent()) {
-            Message existingMessage = optionalExistingMessage.get();
-            if (message.getMessage_text() != null && !message.getMessage_text().trim().isEmpty()) {
-                existingMessage.setMessage_text(message.getMessage_text());
+            if (message.getMessage_text() != null && !message.getMessage_text().trim().isEmpty() && message.getMessage_text().length() <= 225) {
+                messageRepository.save(message);
+                return 1;
             }
-            Message updatedMessage = messageRepository.save(existingMessage);
-            return updatedMessage.equals(existingMessage) ? 0 : 1;
         }
         return 0;
     }
@@ -142,15 +140,14 @@ public class MessageService {
     // database. It is expected for the list to simply be empty if there are no
     // messages. The response status should always be 200, which is the default.
     public List<Message> getAllUserMessages(int account_id) {
-        List<Message> userMessages = new ArrayList<>();
-        List<Message> messages = getAllMessages();
-        for (Message message : messages) {
-            if (message.getPosted_by() == account_id) {
-                userMessages.add(message);
-            }
-        }
-
-        return userMessages;
+        // List<Message> userMessages = new ArrayList<>();
+        // List<Message> messages = getAllMessages();
+        // for (Message message : messages) {
+        //     if (message.getPosted_by() == account_id) {
+        //         userMessages.add(message);
+        //     }
+        // }
+           return messageRepository.findByPostedBy(account_id);
     }
 
 }

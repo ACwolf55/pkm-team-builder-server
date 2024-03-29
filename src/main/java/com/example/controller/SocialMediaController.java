@@ -41,9 +41,14 @@ public class SocialMediaController {
 
     // POST localhost:8080/register
     @PostMapping(value = "/register")
-    public Account register(@RequestBody Account requestbody) {
-       
-        return accountService.register(requestbody);
+    public ResponseEntity<Account> register(@RequestBody Account requestbody) {
+    
+        Account newAccount = accountService.register(requestbody);
+        if(newAccount==null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }else{
+            return ResponseEntity.ok(newAccount);
+        }
     }
 
     // POST localhost:8080/login
@@ -142,12 +147,12 @@ public class SocialMediaController {
 // - If the update of the message is not successful for any reason, the response status should be 400. (Client error)
 // PATCH localhost:8080/messages/{message_id}
 @PatchMapping("/messages/{message_id}")
-public ResponseEntity<Integer> updateMessage(@RequestBody Message requestBody, @PathVariable("message_id") int messageId) {
+public ResponseEntity<Integer> updateMessageHandler(@RequestBody Message requestBody, @PathVariable("message_id") int messageId) {
     int rowsUpdated = messageService.patchMessage(requestBody, messageId);
     if (rowsUpdated > 0) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(rowsUpdated);
     } else {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().build();
     }
 }
 
