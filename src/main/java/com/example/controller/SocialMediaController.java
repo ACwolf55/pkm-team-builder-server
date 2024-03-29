@@ -42,8 +42,7 @@ public class SocialMediaController {
     // POST localhost:8080/register
     @PostMapping(value = "/register")
     public Account register(@RequestBody Account requestbody) {
-        // you will need to change the method's parameters and return the extracted
-        // request body.
+       
         return accountService.register(requestbody);
     }
 
@@ -59,14 +58,11 @@ public class SocialMediaController {
     // - If the login is not successful, the response status should be 401.
     // (Unauthorized)
     @PostMapping(value = "/login")
-    public ResponseEntity<Account> loginHandler(@RequestBody Account requestbody) {
-        Account authenticatedAccount = accountService.login(requestbody);
-
-        if (authenticatedAccount != null) {
-            // Login successful
-            return ResponseEntity.ok(authenticatedAccount);
+    public ResponseEntity<Account> loginHandler(@RequestBody Account requestBody) {
+        Optional<Account> authenticatedAccount = accountService.login(requestBody);
+        if (authenticatedAccount.isPresent()) {
+            return ResponseEntity.ok(authenticatedAccount.get());
         } else {
-            // Login failed
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -86,9 +82,14 @@ public class SocialMediaController {
     // should be 400. (Client error)
     @PostMapping("/messages")
     public ResponseEntity<Message> postMessagesHandler(@RequestBody Message requestBody) {
-        Message newMessage = messageService.postMessage(requestBody);
-        return ResponseEntity.ok(newMessage);
+        try {
+            Message newMessage = messageService.postMessage(requestBody);
+            return ResponseEntity.ok(newMessage);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+    
 
     // GET request on the endpoint GET localhost:8080/messages
     // As a user, I should be able to submit a GET request on the endpoint GET
@@ -111,20 +112,53 @@ public class SocialMediaController {
     // be empty if there is no such message. The response status should always be
     // 200, which is the default.
     @GetMapping("/messages/{message_id}")
-    public ResponseEntity<Message> getSingleMessageHandler(@PathVariable("message_id") int messageId) {
-        Optional<Message> optionalMessage = messageService.getMessageById(messageId);
+    public ResponseEntity<Message> getSingleMessageHandler(@PathVariable("message_id") int message_id) {
+        Optional<Message> optionalMessage = messageService.getMessageById(message_id);
         if (optionalMessage.isPresent()) {
             return ResponseEntity.ok(optionalMessage.get());
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().build();
         }
     }
     
 
     // ` DELETE request on the endpoint DELETE localhost:8080/messages/{message_id}
-    @DeleteMapping("/accounts/{account_id}/messages")
-    public ResponseEntity<String> deleteAccountMessagesHandler(@PathVariable("account_id") String accountId) {
-        return ResponseEntity.ok("Messages for account with id " + accountId + " deleted successfully");
+    // As a User, I should be able to submit a DELETE request on the endpoint DELETE localhost:8080/messages/{message_id}.
+    // - The deletion of an existing message should remove an existing message from the database. If the message existed, the response body should contain the number of rows updated (1). The response status should be 200, which is the default.
+    // - If the message did not exist, the response status should be 200, but the response body should be empty. This is because the DELETE verb is intended to be idempotent, ie, multiple calls to the DELETE endpoint should respond with the same type of response.
+    @DeleteMapping("/messages/{message_id}")
+    public ResponseEntity<Integer> deleteAccountMessagesHandler(@PathVariable("message_id") int message_id) {
+        int rowsUpdated = messageService.deleteMessage(message_id);
+        if(rowsUpdated>0){
+        return ResponseEntity.ok(rowsUpdated);
+        }else{
+            return ResponseEntity.ok().build();
+        }
     }
+
+//     ## 7: Our API should be able to update a message text identified by a message ID.
+// As a user, I should be able to submit a PATCH request on the endpoint PATCH localhost:8080/messages/{message_id}. The request body should contain a new message_text values to replace the message identified by message_id. The request body can not be guaranteed to contain any other information.
+// - The update of a message should be successful if and only if the message id already exists and the new message_text is not blank and is not over 255 characters. If the update is successful, the response body should contain the number of rows updated (1), and the response status should be 200, which is the default. The message existing on the database should have the updated message_text.
+// - If the update of the message is not successful for any reason, the response status should be 400. (Client error)
+// PATCH localhost:8080/messages/{message_id}
+@PatchMapping("/messages/{message_id}")
+public ResponseEntity<Integer> updateMessage(@RequestBody Message requestBody, @PathVariable("message_id") int messageId) {
+    int rowsUpdated = messageService.patchMessage(requestBody, messageId);
+    if (rowsUpdated > 0) {
+        return ResponseEntity.ok().build();
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
+// ## 8: Our API should be able to retrieve all messages written by a particular user.
+// As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/accounts/{account_id}/messages.
+// - The response bo@GetMapping("/accounts/{account_id}/messages")
+//     public ResponseEntity<List<Message>> getAllUserMessagesHandler(@PathVariable("account_id") int account_id) {
+//         List<Message> messages = messageService.getAllUserMessages();
+//         return ResponseEntity.ok(messages);
+//     }dy should contain a JSON representation of a list containing all messages posted by a particular user, which is retrieved from the database. It is expected for the list to simply be empty if there are no messages. The response status should always be 200, which is the default.
+// 
 
 }
