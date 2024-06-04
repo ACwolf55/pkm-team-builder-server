@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.controller.SocialMediaController;
+import com.example.controller.PokemonController;
 import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.repository.AccountRepository;
@@ -47,7 +47,7 @@ public class SpringTest {
      */
     @Test
     public void getSocialMediaControllerBean(){
-        SocialMediaController bean = applicationContext.getBean(SocialMediaController.class);
+        PokemonController bean = applicationContext.getBean(PokemonController.class);
         Assertions.assertNotNull(bean);
     }
     /**
