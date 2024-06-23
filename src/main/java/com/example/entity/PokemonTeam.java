@@ -2,164 +2,142 @@ package com.example.entity;
 
 import javax.persistence.*;
 
-/**
- * This is a class that models a PokemonTeam.
- *
- * You should NOT make any modifications to this class.
- */
 @Entity
-@Table(name = "pokemon_team") // Specifies the table name
+@Table(name = "pokemon_team")
 public class PokemonTeam {
-    /**
-     * An id for this PokemonTeam. You should use this as the Entity's ID.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
 
-    /**
-     * The user this team belongs to.
-     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pokemon_team_id")
+    private Integer pokemonTeamId;
+
+    @Column(name = "team_name", nullable = false, length = 50)
+    private String teamName;
+
+    @Column(name = "pokemon_1", nullable = false, length = 50)
+    private String pokemon1;
+
+    @Column(name = "pokemon_2", nullable = false, length = 50)
+    private String pokemon2;
+
+    @Column(name = "pokemon_3", nullable = false, length = 50)
+    private String pokemon3;
+
+    @Column(name = "pokemon_4", nullable = false, length = 50)
+    private String pokemon4;
+
+    @Column(name = "pokemon_5", nullable = false, length = 50)
+    private String pokemon5;
+
+    @Column(name = "pokemon_6", nullable = false, length = 50)
+    private String pokemon6;
+
     @ManyToOne
     @JoinColumn(name = "pkm_user_id", nullable = false)
     private PkmUser pkmUser;
 
-    /**
-     * The name of the team.
-     */
-    @Column(name = "team_name", nullable = false)
-    private String teamName;
-
-    /**
-     * A default, no-args constructor, as well as correctly formatted getters and setters, are needed for
-     * Jackson Objectmapper to work.
-     */
+    // Default constructor
     public PokemonTeam() {
     }
 
-    /**
-     * Constructor for creating a new PokemonTeam without id.
-     *
-     * @param pkmUser
-     * @param teamName
-     */
-    public PokemonTeam(PkmUser pkmUser, String teamName) {
-        this.pkmUser = pkmUser;
+    // Constructor with all fields
+    public PokemonTeam(String teamName, String pokemon1, String pokemon2, String pokemon3, String pokemon4, String pokemon5, String pokemon6, PkmUser pkmUser) {
         this.teamName = teamName;
-    }
-
-    /**
-     * Constructor for creating a new PokemonTeam with id.
-     *
-     * @param id
-     * @param pkmUser
-     * @param teamName
-     */
-    public PokemonTeam(Integer id, PkmUser pkmUser, String teamName) {
-        this.id = id;
-        this.pkmUser = pkmUser;
-        this.teamName = teamName;
-    }
-
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @return id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @param id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @return pkmUser
-     */
-    public PkmUser getPkmUser() {
-        return pkmUser;
-    }
-
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @param pkmUser
-     */
-    public void setPkmUser(PkmUser pkmUser) {
+        this.pokemon1 = pokemon1;
+        this.pokemon2 = pokemon2;
+        this.pokemon3 = pokemon3;
+        this.pokemon4 = pokemon4;
+        this.pokemon5 = pokemon5;
+        this.pokemon6 = pokemon6;
         this.pkmUser = pkmUser;
     }
 
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @return teamName
-     */
+    // Getters and setters
+    public Integer getPokemonTeamId() {
+        return pokemonTeamId;
+    }
+
+    public void setPokemonTeamId(Integer pokemonTeamId) {
+        this.pokemonTeamId = pokemonTeamId;
+    }
+
     public String getTeamName() {
         return teamName;
     }
 
-    /**
-     * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
-     *
-     * @param teamName
-     */
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
-    /**
-     * Overriding the default equals() method adds functionality to tell when two objects are identical, allowing
-     * Assert.assertEquals and List.contains to function.
-     *
-     * @param obj the other object.
-     * @return true if obj is equal to this object.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PokemonTeam other = (PokemonTeam) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (teamName == null) {
-            if (other.teamName != null)
-                return false;
-        } else if (!teamName.equals(other.teamName))
-            return false;
-        if (pkmUser == null) {
-            if (other.pkmUser != null)
-                return false;
-        } else if (!pkmUser.equals(other.pkmUser))
-            return false;
-        return true;
+    public String getPokemon1() {
+        return pokemon1;
     }
 
-    /**
-     * Overriding the default toString() method allows for easy debugging.
-     *
-     * @return a String representation of this class.
-     */
+    public void setPokemon1(String pokemon1) {
+        this.pokemon1 = pokemon1;
+    }
+
+    public String getPokemon2() {
+        return pokemon2;
+    }
+
+    public void setPokemon2(String pokemon2) {
+        this.pokemon2 = pokemon2;
+    }
+
+    public String getPokemon3() {
+        return pokemon3;
+    }
+
+    public void setPokemon3(String pokemon3) {
+        this.pokemon3 = pokemon3;
+    }
+
+    public String getPokemon4() {
+        return pokemon4;
+    }
+
+    public void setPokemon4(String pokemon4) {
+        this.pokemon4 = pokemon4;
+    }
+
+    public String getPokemon5() {
+        return pokemon5;
+    }
+
+    public void setPokemon5(String pokemon5) {
+        this.pokemon5 = pokemon5;
+    }
+
+    public String getPokemon6() {
+        return pokemon6;
+    }
+
+    public void setPokemon6(String pokemon6) {
+        this.pokemon6 = pokemon6;
+    }
+
+    public PkmUser getPkmUser() {
+        return pkmUser;
+    }
+
+    public void setPkmUser(PkmUser pkmUser) {
+        this.pkmUser = pkmUser;
+    }
+
+    // toString method for easy debugging
     @Override
     public String toString() {
         return "PokemonTeam{" +
-                "id=" + id +
-                ", pkmUser=" + pkmUser +
+                "pokemonTeamId=" + pokemonTeamId +
                 ", teamName='" + teamName + '\'' +
+                ", pokemon1='" + pokemon1 + '\'' +
+                ", pokemon2='" + pokemon2 + '\'' +
+                ", pokemon3='" + pokemon3 + '\'' +
+                ", pokemon4='" + pokemon4 + '\'' +
+                ", pokemon5='" + pokemon5 + '\'' +
+                ", pokemon6='" + pokemon6 + '\'' +
+                ", pkmUser=" + pkmUser +
                 '}';
     }
 }
