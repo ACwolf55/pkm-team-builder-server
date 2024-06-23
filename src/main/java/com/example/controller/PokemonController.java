@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/pokemon")
+@RequestMapping("/api/")
 public class PokemonController {
 
     @Autowired
-    private PokemonService pokemonService;
+    private PokemonService PokemonService;
 
     @PostMapping("/team")
     public ResponseEntity<?> saveTeam(HttpSession session, @RequestBody PokemonTeamRequest request) {

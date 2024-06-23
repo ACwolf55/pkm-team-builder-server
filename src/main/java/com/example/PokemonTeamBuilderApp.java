@@ -17,13 +17,13 @@ import static org.springframework.boot.SpringApplication.run;
  *
  */
 @SpringBootApplication
-public class SocialMediaApp {
+public class PokemonTeamBuilderApp {
     /**
      * Runs the application
      * @param args The arguments of the program.
      * @throws InterruptedException 
      */
     public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(SocialMediaApp.class, args);
+        SpringApplication.run(PokemonTeamBuilderApp.class, args);
     }
 }
