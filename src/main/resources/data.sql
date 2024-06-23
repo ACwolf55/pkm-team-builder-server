@@ -11,11 +11,11 @@ CREATE TABLE
     pkm_user_id INT NOT NULL REFERENCES pkm_users (pkm_user_id),
     team_name VARCHAR(50) NOT NULL,
     pokemon_1 VARCHAR(50) NOT NULL,
-    pokemon_2 VARCHAR(50) NOT NULL,
-    pokemon_3 VARCHAR(50) NOT NULL,
-    pokemon_4 VARCHAR(50) NOT NULL,
-    pokemon_5 VARCHAR(50) NOT NULL,
-    pokemon_6 VARCHAR(50) NOT NULL
+    pokemon_2 VARCHAR(50),
+    pokemon_3 VARCHAR(50),
+    pokemon_4 VARCHAR(50),
+    pokemon_5 VARCHAR(50),
+    pokemon_6 VARCHAR(50) 
   );
 
 
