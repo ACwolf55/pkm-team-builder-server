@@ -3,6 +3,8 @@ package com.example.service;
 
 import com.example.entity.PokemonTeam;
 import com.example.repository.PokemonTeamRepository;
+import com.example.entity.PkmUser;
+import com.example.repository.PkmUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,24 +22,29 @@ import java.util.ArrayList;
 public class PokemonTeamService {
     
     private final PokemonTeamRepository pokemonTeamRepository;
+    private PkmUserRepository pkmUserRepository;
  
     @Autowired
-    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository ) {
+    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository, PkmUserRepository pkmUserRepository ) {
         this.pokemonTeamRepository = pokemonTeamRepository;
+        this.pkmUserRepository = pkmUserRepository;
         
     }
 
      
-     public PokemonTeam postMessage(PokemonTeam pokemonTeam) {
-        int account_id = PokemonTeam.getPosted_by();
-        boolean userExists = PokemonTeamRepository.existsById(account_id);
-        if (message.getMessage_text() == null ||
-                message.getMessage_text().trim().isEmpty() ||
-                message.getMessage_text().length() > 225 ||
-                !userExists) {
-            throw new IllegalArgumentException("Invalid message or user");
+     public PokemonTeam postPokemonTeam(PokemonTeam pokemonTeam) {
+        int pkmUserId = pokemonTeam.getPkmUserId();
+        boolean pokemonTeamExists = pkmUserRepository.existsById(pkmUserId);
+        if (pokemonTeam.getPokemon1() == null ||
+                pokemonTeam.getPokemon1().trim().isEmpty() ||
+                pokemonTeam.getPokemon1().length() > 50 ||
+                pokemonTeam.getTeamName() == null ||
+                pokemonTeam.getTeamName().trim().isEmpty() ||
+                pokemonTeam.getTeamName().length() > 50 ||
+                !pokemonTeamExists) {
+            throw new IllegalArgumentException("Invalid team name or team doesnt have a pokemon");
         }
-        return messageRepository.save(message);
+        return pokemonTeamRepository.save(pokemonTeam);
     }
 
 
