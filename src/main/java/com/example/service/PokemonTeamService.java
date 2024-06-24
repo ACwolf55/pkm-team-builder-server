@@ -48,6 +48,30 @@ public class PokemonTeamService {
     }
 
 
+    public List<PokemonTeam> getAllUserTeams(int pkm_user_id) {
+        // List<Message> userMessages = new ArrayList<>();
+        // List<Message> messages = getAllMessages();
+        // for (Message message : messages) {
+        //     if (message.getPosted_by() == account_id) {
+        //         userMessages.add(message);
+        //     }
+        // }
+           return PokemonTeamRepository.findByPkmUserId(pkm_user_id);
+    }
+
+    public int deletePokemonTeam(int pokemon_team_id) {
+        // long longId = message_id;
+        boolean exists = pokemonTeamRepository.existsById(pokemon_team_id);
+        if (exists) {
+            pokemonTeamRepository.deleteById(pokemon_team_id);
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+
 
 
 }

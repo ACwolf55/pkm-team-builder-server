@@ -21,11 +21,10 @@ public class PokemonTeamController {
         this.pokemonTeamService = pokemonTeamService;
     }
 
-
     @PostMapping("/pokemon_team")
-    public ResponseEntity<PokemonTeam> postMessagesHandler(@RequestBody PokemonTeam requestBody) {
+    public ResponseEntity<PokemonTeam> postMessages(@RequestBody PokemonTeam requestBody) {
         try {
-            PokemonTeam newPokemonTeam = pokemonTeamService.postTeam(requestBody);
+            PokemonTeam newPokemonTeam = pokemonTeamService.postPokemonTeam(requestBody);
             return ResponseEntity.ok(newPokemonTeam);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
@@ -43,12 +42,18 @@ public class PokemonTeamController {
     }
 
     @DeleteMapping("/pokemon_team/{pokemon_team_id}")
-    public ResponseEntity<Integer> deleteAccountMessagesHandler(@PathVariable("pokemon_team_id") int pokemon_team_id) {
+    public ResponseEntity<Integer> deletePokemonTeam(@PathVariable("pokemon_team_id") int pokemon_team_id) {
         int rowsUpdated = pokemonTeamService.deletePokemonTeam(pokemon_team_id);
-        if(rowsUpdated>0){
-        return ResponseEntity.ok(rowsUpdated);
-        }else{
+        if (rowsUpdated > 0) {
+            return ResponseEntity.ok(rowsUpdated);
+        } else {
             return ResponseEntity.ok().build();
         }
+    }
+
+    @GetMapping("/pokemon_team/{pkm_user_id}")
+    public ResponseEntity<List<PokemonTeam>> getAllUserTeamsHandler(@PathVariable("pkm_user_id") int pkm_user_id) {
+        List<PokemonTeam> userPokemonTeams = pokemonTeamService.getAllUserTeams(pkm_user_id);
+        return ResponseEntity.ok(userPokemonTeams);
     }
 }
