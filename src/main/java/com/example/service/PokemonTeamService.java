@@ -56,7 +56,7 @@ public class PokemonTeamService {
         //         userMessages.add(message);
         //     }
         // }
-           return PokemonTeamRepository.findByPkmUserId(pkm_user_id);
+           return pokemonTeamRepository.findByPkmUserId(pkm_user_id);
     }
 
     public int deletePokemonTeam(int pokemon_team_id) {
@@ -68,6 +68,11 @@ public class PokemonTeamService {
         } else {
             return 0;
         }
+    }
+
+    public Optional<PokemonTeam> getPokemonTeamById(int pokemon_team_id) {
+        Optional<PokemonTeam> optionalPokemonTeam= pokemonTeamRepository.findById(pokemon_team_id);
+        return optionalPokemonTeam;
 
     }
 
