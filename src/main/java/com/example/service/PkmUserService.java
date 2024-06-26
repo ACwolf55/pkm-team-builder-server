@@ -25,9 +25,9 @@ public class PkmUserService {
     }
 
     public PkmUser register(PkmUser pkmUser) {
-        String username = pkmUser.getUserName();
+        String userName = pkmUser.getUserName();
 
-        boolean userExists = pkmUserRepository.existsByUserName(username);
+        boolean userExists = pkmUserRepository.existsByUserName(userName);
         if (userExists) {
             return null;
         }
@@ -44,10 +44,10 @@ public class PkmUserService {
     }
 
     public Optional<PkmUser> login(PkmUser pkmUser) {
-        String username = pkmUser.getUserName();
+        String userName = pkmUser.getUserName();
         String password = pkmUser.getPassword();
 
-        PkmUser authPkmUser = pkmUserRepository.findByUsername(username);
+        PkmUser authPkmUser = pkmUserRepository.findByUsername(userName);
 
         if (authPkmUser != null && authPkmUser.getPassword().equals(password)) {
             return Optional.of(authPkmUser);

@@ -7,6 +7,6 @@ endpoints/controllers:
 -login
 -register
 -create team
--get team
--edit team
+-get single team
+-get all user teams
 -delete team

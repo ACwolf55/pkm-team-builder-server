@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PkmUserRepository extends JpaRepository<PkmUser, Integer> {
-    boolean existsByUserName(String username); 
-    PkmUser findByUsername(String username);
+    boolean existsByUserName(String userName); 
+    PkmUser findByUsername(String userName);
 }
