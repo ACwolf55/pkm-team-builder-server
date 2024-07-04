@@ -14,12 +14,18 @@ import java.util.Optional;
 @RestController
     public class PkmUserController {
         
-        private PkmUserService PkmUserService;
+        private PkmUserService pkmUserService;
+
+        @Autowired
+    public PkmUserController(PkmUserService pkmUserService) {
+        this.pkmUserService = pkmUserService;
+
+    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<PkmUser> register(@RequestBody PkmUser requestbody) {
     
-        PkmUser newPkmUser = PkmUserService.register(requestbody);
+        PkmUser newPkmUser = pkmUserService.register(requestbody);
         if(newPkmUser==null){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }else{
@@ -29,7 +35,7 @@ import java.util.Optional;
 
     @PostMapping(value = "/login")
     public ResponseEntity<PkmUser> loginHandler(@RequestBody PkmUser requestBody) {
-        Optional<PkmUser> authenticatedAccount = PkmUserService.login(requestBody);
+        Optional<PkmUser> authenticatedAccount = pkmUserService.login(requestBody);
         if (authenticatedAccount.isPresent()) {
             return ResponseEntity.ok(authenticatedAccount.get());
         } else {
