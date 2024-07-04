@@ -71,7 +71,7 @@ public class PokemonTeamService {
     }
 
     public Optional<PokemonTeam> getPokemonTeamById(int pokemon_team_id) {
-        Optional<PokemonTeam> optionalPokemonTeam= pokemonTeamRepository.findById(pokemon_team_id);
+        Optional<PokemonTeam> optionalPokemonTeam = pokemonTeamRepository.findById(pokemon_team_id);
         return optionalPokemonTeam;
 
     }

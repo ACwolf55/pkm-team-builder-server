@@ -31,7 +31,7 @@ public class PokemonTeamController {
         }
     }
 
-    @GetMapping("/pokemon_team/{pokemon_team_id}")
+    @GetMapping("/pokemon_team/team_id/{pokemon_team_id}")
     public ResponseEntity<PokemonTeam> getPokemonTeam(@PathVariable("pokemon_team_id") int pokemon_team_id) {
         Optional<PokemonTeam> optionalPokemonTeam = pokemonTeamService.getPokemonTeamById(pokemon_team_id);
         if (optionalPokemonTeam.isPresent()) {
@@ -51,7 +51,7 @@ public class PokemonTeamController {
         }
     }
 
-    @GetMapping("/pokemon_team/{pkm_user_id}")
+    @GetMapping("/pokemon_team/user_id/{pkm_user_id}")
     public ResponseEntity<List<PokemonTeam>> getAllUserTeamsHandler(@PathVariable("pkm_user_id") int pkm_user_id) {
         List<PokemonTeam> userPokemonTeams = pokemonTeamService.getAllUserTeams(pkm_user_id);
         return ResponseEntity.ok(userPokemonTeams);
