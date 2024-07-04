@@ -1,6 +1,8 @@
 
 # pkm-team-builder-server
 
+mvn spring-boot:run
+
 Server for Pokemon Team Builder site
 
 endpoints/controllers:
