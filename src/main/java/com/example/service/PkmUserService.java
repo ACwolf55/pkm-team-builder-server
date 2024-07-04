@@ -47,7 +47,7 @@ public class PkmUserService {
         String userName = pkmUser.getUserName();
         String password = pkmUser.getPassword();
 
-        PkmUser authPkmUser = pkmUserRepository.findByUsername(userName);
+        PkmUser authPkmUser = pkmUserRepository.findByUserName(userName);
 
         if (authPkmUser != null && authPkmUser.getPassword().equals(password)) {
             return Optional.of(authPkmUser);
