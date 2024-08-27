@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.entity.PkmUser;
-import com.example.service.PkmUserService;
+import com.example.entity.Trainer;
+import com.example.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +12,30 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-    public class PkmUserController {
+    public class TrainerController {
         
-        private PkmUserService pkmUserService;
+        private TrainerService trainerService;
 
         @Autowired
-    public PkmUserController(PkmUserService pkmUserService) {
-        this.pkmUserService = pkmUserService;
+    public TrainerController(TrainerService trainerService) {
+        this.trainerService = trainerService;
 
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<PkmUser> register(@RequestBody PkmUser requestbody) {
+    public ResponseEntity<Trainer> register(@RequestBody Trainer requestbody) {
     
-        PkmUser newPkmUser = pkmUserService.register(requestbody);
-        if(newPkmUser==null){
+        Trainer newTrainer = trainerService.register(requestbody);
+        if(newTrainer==null){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }else{
-            return ResponseEntity.ok(newPkmUser);
+            return ResponseEntity.ok(newTrainer);
         }
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<PkmUser> loginHandler(@RequestBody PkmUser requestBody) {
-        Optional<PkmUser> authenticatedAccount = pkmUserService.login(requestBody);
+    public ResponseEntity<Trainer> loginHandler(@RequestBody Trainer requestBody) {
+        Optional<Trainer> authenticatedAccount = trainerService.login(requestBody);
         if (authenticatedAccount.isPresent()) {
             return ResponseEntity.ok(authenticatedAccount.get());
         } else {

@@ -3,8 +3,8 @@ package com.example.service;
 
 import com.example.entity.PokemonTeam;
 import com.example.repository.PokemonTeamRepository;
-import com.example.entity.PkmUser;
-import com.example.repository.PkmUserRepository;
+import com.example.entity.Trainer;
+import com.example.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 public class PokemonTeamService {
     
     private final PokemonTeamRepository pokemonTeamRepository;
-    private PkmUserRepository pkmUserRepository;
+    private TrainerRepository pkmUserRepository;
  
     @Autowired
-    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository, PkmUserRepository pkmUserRepository ) {
+    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository, TrainerRepository pkmUserRepository ) {
         this.pokemonTeamRepository = pokemonTeamRepository;
         this.pkmUserRepository = pkmUserRepository;
         
