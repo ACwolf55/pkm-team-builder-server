@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrainerRepository extends JpaRepository<Trainer, Integer> {
-    boolean existsByUserName(String trainerName); 
-    Trainer findByUserName(String trainerName);
+    boolean existsByTrainerName(String trainerName); 
+    Trainer findByTrainerName(String trainerName);
 }

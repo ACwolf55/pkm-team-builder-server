@@ -27,7 +27,7 @@ public class TrainerService {
     public Trainer register(Trainer trainer) {
         String trainerName = trainer.getTrainerName();
 
-        boolean trainerExists = trainerRepository.existsByUserName(trainerName);
+        boolean trainerExists = trainerRepository.existsByTrainerName(trainerName);
         if (trainerExists) {
             return null;
         }
@@ -47,7 +47,7 @@ public class TrainerService {
         String trainerName = trainer.getTrainerName();
         String password = trainer.getPassword();
 
-        Trainer authTrainer = trainerRepository.findByUserName(trainerName);
+        Trainer authTrainer = trainerRepository.findByTrainerName(trainerName);
 
         if (authTrainer != null && authTrainer.getPassword().equals(password)) {
             return Optional.of(authTrainer);
