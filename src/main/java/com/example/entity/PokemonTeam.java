@@ -32,15 +32,15 @@ public class PokemonTeam {
     @Column(name = "pokemon_6", nullable = false, length = 50)
     private String pokemon6;
 
-    @Column(name = "pkm_user_id", nullable = false)
-    private Integer pkmUserId;
+    @Column(name = "trainer_id", nullable = false)
+    private Integer trainerId;
 
     // Default constructor
     public PokemonTeam() {
     }
 
     // Constructor with all fields
-    public PokemonTeam(String teamName, String pokemon1, String pokemon2, String pokemon3, String pokemon4, String pokemon5, String pokemon6, Integer pkmUserId) {
+    public PokemonTeam(String teamName, String pokemon1, String pokemon2, String pokemon3, String pokemon4, String pokemon5, String pokemon6, Integer trainerId) {
         this.teamName = teamName;
         this.pokemon1 = pokemon1;
         this.pokemon2 = pokemon2;
@@ -48,7 +48,7 @@ public class PokemonTeam {
         this.pokemon4 = pokemon4;
         this.pokemon5 = pokemon5;
         this.pokemon6 = pokemon6;
-        this.pkmUserId = pkmUserId;
+        this.trainerId = trainerId;
     }
 
     // Getters and setters
@@ -115,13 +115,8 @@ public class PokemonTeam {
     public void setPokemon6(String pokemon6) {
         this.pokemon6 = pokemon6;
     }
-
-    public Integer getPkmUserId() {
-        return pkmUserId;
-    }
-
-    public void setPkmUserId(Integer pkmUserId) {
-        this.pkmUserId = pkmUserId;
+    public Integer getTrainerId() {
+        return trainerId;
     }
 
     // toString method for easy debugging
@@ -136,7 +131,7 @@ public class PokemonTeam {
                 ", pokemon4='" + pokemon4 + '\'' +
                 ", pokemon5='" + pokemon5 + '\'' +
                 ", pokemon6='" + pokemon6 + '\'' +
-                ", pkmUserId=" + pkmUserId +
+                ", pkmUserId=" + trainerId +
                 '}';
     }
 }

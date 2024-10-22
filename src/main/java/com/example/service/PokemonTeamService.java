@@ -22,19 +22,19 @@ import java.util.ArrayList;
 public class PokemonTeamService {
     
     private final PokemonTeamRepository pokemonTeamRepository;
-    private TrainerRepository pkmUserRepository;
+    private TrainerRepository trainerRepository;
  
     @Autowired
-    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository, TrainerRepository pkmUserRepository ) {
+    public PokemonTeamService(PokemonTeamRepository pokemonTeamRepository, TrainerRepository trainerRepository ) {
         this.pokemonTeamRepository = pokemonTeamRepository;
-        this.pkmUserRepository = pkmUserRepository;
+        this.trainerRepository = trainerRepository;
         
     }
 
      
      public PokemonTeam postPokemonTeam(PokemonTeam pokemonTeam) {
-        int pkmUserId = pokemonTeam.getPkmUserId();
-        boolean pokemonTeamExists = pkmUserRepository.existsById(pkmUserId);
+        int trainerId = pokemonTeam.getTrainerId();
+        boolean pokemonTeamExists = trainerRepository.existsById(trainerId);
         if (pokemonTeam.getPokemon1() == null ||
                 pokemonTeam.getPokemon1().trim().isEmpty() ||
                 pokemonTeam.getPokemon1().length() > 50 ||
@@ -56,7 +56,7 @@ public class PokemonTeamService {
         //         userMessages.add(message);
         //     }
         // }
-           return pokemonTeamRepository.findByPkmUserId(pkm_user_id);
+           return pokemonTeamRepository.findByTrainerId(pkm_user_id);
     }
 
     public int deletePokemonTeam(int pokemon_team_id) {

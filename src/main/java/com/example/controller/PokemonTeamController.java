@@ -51,9 +51,9 @@ public class PokemonTeamController {
         }
     }
 
-    @GetMapping("/pokemon_team/user_id/{pkm_user_id}")
-    public ResponseEntity<List<PokemonTeam>> getAllUserTeamsHandler(@PathVariable("pkm_user_id") int pkm_user_id) {
-        List<PokemonTeam> userPokemonTeams = pokemonTeamService.getAllUserTeams(pkm_user_id);
+    @GetMapping("/pokemon_team/{trainer_id}")
+    public ResponseEntity<List<PokemonTeam>> getAllUserTeamsHandler(@PathVariable("trainer_id") int trainer_id) {
+        List<PokemonTeam> userPokemonTeams = pokemonTeamService.getAllUserTeams(trainer_id);
         return ResponseEntity.ok(userPokemonTeams);
     }
 }

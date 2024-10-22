@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PokemonTeamRepository extends JpaRepository<PokemonTeam, Integer> {
-    List<PokemonTeam> findByPkmUserId(Integer pkmUserId);
+    List<PokemonTeam> findByTrainerId(Integer trainerId);
     
 }
