@@ -1,9 +1,13 @@
 
 # pkm-team-builder-server
+----- Server for Pokemon Team Builder site -----
 
-mvn spring-boot:run
+TO START: mvn spring-boot:run
 
-Server for Pokemon Team Builder site
+When testing endpoints: Comment out WebConfig File to allow RapidApi/Postman access
+
+
+Aiming to host on AWS
 
 endpoints/controllers:
 -login
