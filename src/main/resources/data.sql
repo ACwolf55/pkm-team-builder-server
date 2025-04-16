@@ -19,7 +19,7 @@ CREATE TABLE
   );
 
 
-INSERT INTO tainers (trainer_name, password) VALUES ('Ash Ketchum', 'pokemonmaster');
+INSERT INTO trainers (trainer_name, password) VALUES ('Ash Ketchum', 'pokemonmaster');
 INSERT INTO trainers (trainer_name, password) VALUES ('Leon', 'galar');
 INSERT INTO trainers (trainer_name, password) VALUES ('Cynthia', 'sinnoh');
 INSERT INTO trainers (trainer_name, password) VALUES ('Erika', 'celadon');
