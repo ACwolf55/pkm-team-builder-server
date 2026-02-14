@@ -1,34 +1,22 @@
 package com.example.security;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import com.example.service.TrainerService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService; // Import added
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
-
-import java.io.IOException;
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "D1N0S4UR";
+    // Generate a secure key for HS256 (newer version requires this)
+    private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(
+        "D1N0S4UR_S3CR3T_K3Y_F0R_P0K3M0N_T34M_BU1LD3R_4PP_2024_L0NG_3N0UGH".getBytes()
+    );
+    
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 hours
 
     public String generateToken(String username) {
@@ -36,13 +24,14 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -53,8 +42,9 @@ public class JwtUtil {
     }
 
     private boolean isTokenExpired(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration()
