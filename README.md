@@ -104,7 +104,6 @@ Server starts on `http://localhost:8080`.
 
 - [ ] Add `PUT /pokemon-teams/pokemon_team/{id}` for team editing (currently only create/read/delete)
 - [ ] Deploy to AWS Elastic Beanstalk
-- [ ] Profile-based CORS: `application-dev.properties` (allow all origins) vs `application-prod.properties` (restrict to Vercel domain)
 - [ ] Refactor `PokemonTeam` entity to use a join table instead of six denormalized columns
 - [ ] Add integration tests
 - [ ] OpenAPI / Swagger docs
