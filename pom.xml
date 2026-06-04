@@ -16,9 +16,9 @@
   </parent>
 
   <properties>
-    <java.version>20</java.version> <!-- Updated to match your installed Java version -->
-    <maven.compiler.source>20</maven.compiler.source> <!-- Updated -->
-    <maven.compiler.target>20</maven.compiler.target> <!-- Updated -->
+    <java.version>21</java.version> <!-- Updated to match your installed Java version -->
+    <maven.compiler.source>21</maven.compiler.source> <!-- Updated -->
+    <maven.compiler.target>21</maven.compiler.target> <!-- Updated -->
   </properties>
 
   <dependencies>
